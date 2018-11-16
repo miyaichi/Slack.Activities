@@ -497,11 +497,10 @@
       ]
     },
     "Microsoft.Rest.ClientRuntime/2.3.10": {
-      "sha512": "a30J6t7LRkYx974tLaRnJc/dYZ1M7uhc5vdgULxdhL7HJNJydG7e+jyAVD15gK+vFR1i9MH+5Ch9t1zhb/Lp1g==",
+      "sha512": "JO9CzV1hvjtrIzq06gJ5nNv7GV24Xz3Y3O9vx7fCe7ndNA0NmD3fZ9JUgFir2UvJ2/+9vvCo/6RXjyfywvQQIw==",
       "type": "package",
       "path": "microsoft.rest.clientruntime/2.3.10",
       "files": [
-        ".signature.p7s",
         "lib/net452/Microsoft.Rest.ClientRuntime.dll",
         "lib/net452/Microsoft.Rest.ClientRuntime.runtimeconfig.json",
         "lib/net452/Microsoft.Rest.ClientRuntime.xml",
@@ -773,15 +772,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\miyaichi.yoshihiko\\.nuget\\packages\\": {}
+    "C:\\Users\\Yoshihiko Miyaichi\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
       "projectUniqueName": "Slack",
       "projectName": "Slack",
-      "projectPath": "C:\\Users\\miyaichi.yoshihiko\\Documents\\UiPath\\Slack.Activities\\.local",
-      "packagesPath": "C:\\Users\\miyaichi.yoshihiko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\miyaichi.yoshihiko\\Documents\\UiPath\\Slack.Activities\\.local"
+      "projectPath": "C:\\Users\\Yoshihiko Miyaichi\\Documents\\UiPath\\Slack.Activities\\.local",
+      "packagesPath": "C:\\Users\\Yoshihiko Miyaichi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Yoshihiko Miyaichi\\Documents\\UiPath\\Slack.Activities\\.local"
     },
     "frameworks": {
       "net461": {

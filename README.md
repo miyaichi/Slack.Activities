@@ -8,5 +8,8 @@ Slack Web API（ https://api.slack.com/web#methods )のうち、最低限必要�
 ## conversations
 * conversations.members
 
+## files
+* fies.upload
+
 ## users
 * users.info
