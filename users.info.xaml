@@ -71,10 +71,9 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Description: Gets information about a user.&#xA;&#xA;Parameter:&#xA;Token (In, String): Authentication token bearing required scopes.&#xA;User (In, String): User to get info on&#xD;&#xA;Info (Out, Dictionary&lt;String, String&gt;): User Info&#xD;&#xA;Profile (Out, DIctionary &lt;String, String&gt;): User Profile" DisplayName="users.info" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Description: Gets information about a user.&#xA;https://api.slack.com/methods/users.info&#xD;&#xA;&#xA;Parameter:&#xA;Token (In, String): Authentication token bearing required scopes.&#xA;User (In, String): User to get info on&#xA;Info (Out, Dictionary&lt;String, String&gt;): User Info&#xA;Profile (Out, DIctionary &lt;String, String&gt;): User Profile" DisplayName="users.info" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="Result" />
       <Variable x:TypeArguments="x:Int32" Name="StatusCode" />
@@ -108,7 +107,7 @@
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Error:  &quot; + jsonObject(&quot;error&quot;).toString)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Else>
     </If>
-    <Sequence DisplayName="Get Profile" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="Get User" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <Sequence.Variables>
         <Variable x:TypeArguments="njl:JObject" Name="JsonUser" />
         <Variable x:TypeArguments="njl:JObject" Name="JsonProfile" />
@@ -146,41 +145,44 @@
           </ActivityAction>
         </ui:ForEach.Body>
       </ui:ForEach>
-      <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3" JsonObject="[JsonProfile]" JsonString="[JsonUser(&quot;profile&quot;).ToString]" />
-      <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
-        <Assign.To>
-          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[Profile]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[new Dictionary(Of String, String)]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <ui:ForEach x:TypeArguments="njl:JToken" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[JsonProfile]">
-        <ui:ForEach.Body>
-          <ActivityAction x:TypeArguments="njl:JToken">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="njl:JToken" Name="item" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_3">
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="njl:JProperty">[p]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="njl:JProperty">[item.ToObject(Of JProperty)]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[Profile]" DisplayName="Add to dictionary" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_1" Key="[p.Name.ToString]" Value="[p.Value.ToString]" />
-            </Sequence>
-          </ActivityAction>
-        </ui:ForEach.Body>
-      </ui:ForEach>
+      <Sequence DisplayName="Get Profile">
+        <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_3" JsonObject="[JsonProfile]" JsonString="[JsonUser(&quot;profile&quot;).ToString]" />
+        <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+          <Assign.To>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[Profile]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[new Dictionary(Of String, String)]</InArgument>
+          </Assign.Value>
+        </Assign>
+        <ui:ForEach x:TypeArguments="njl:JToken" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[JsonProfile]">
+          <ui:ForEach.Body>
+            <ActivityAction x:TypeArguments="njl:JToken">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="njl:JToken" Name="item" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="njl:JProperty">[p]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="njl:JProperty">[item.ToObject(Of JProperty)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[Profile]" DisplayName="Add to dictionary" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_1" Key="[p.Name.ToString]" Value="[p.Value.ToString]" />
+              </Sequence>
+            </ActivityAction>
+          </ui:ForEach.Body>
+        </ui:ForEach>
+        <sap2010:WorkflowViewState.IdRef>Sequence_5</sap2010:WorkflowViewState.IdRef>
+      </Sequence>
     </Sequence>
-    <sads:DebugSymbol.Symbol>d01DOlxVc2Vyc1xZb3NoaWhpa28gTWl5YWljaGlcRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXHVzZXJzLmluZm8ueGFtbDdNA7QBDgIBAVQFYxUCATtkBWgKAgE2aQVpvgECATFqBW4KAgEtbwWyARACAQJdP11AAgFGVOQDVOoDAgFFXj1eQwIBQ1S1A1S/AwIBQVTPAlTxAgIBQFw+XEUCAT5UywNU2QMCATxkE2QnAgE3ZglmrgECATlpsQFpuwECATRplwFppQECATJqE2pGAgEubAlswAECAS90B3TdAQIBKXUHfBACASV9B5QBFAIBF5UBB5UB4QECAROWAQedARACAQ+eAQexARQCAQNmGmaBAQIBOmwabJMBAgEwdLEBdNoBAgEsdJkBdKUBAgEqekx6bwIBKHdNd1MCASZ9lAF9oAECASSDAQ2RARgCARiVAbQBlQHeAQIBFpUBmQGVAagBAgEUmwFMmwFvAgESmAFNmAFWAgEQngGUAZ4BowECAQ6kAQ2uARgCAQSEAQ+LARgCASCMAQ+QARQCARmlAQ+sARgCAQqtAQ+tAewBAgEFiQE/iQFcAgEjhgFAhgFDAgEhjAEdjAFNAgEajgETjgHtAQIBG6oBP6oBXAIBDacBQKcBQwIBC60B1QGtAekBAgEJrQFVrQFgAgEHrQG7Aa0BzgECAQaOAdYBjgHqAQIBH44BWY4BYQIBHY4BvAGOAc8BAgEc</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d01DOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXHVzZXJzLmluZm8ueGFtbDhMA7YBDgIBAVMFYhUCATxjBWcKAgE3aAVovgECATJpBW0KAgEubgW0ARACAQJcP1xAAgFHU+QDU+oDAgFGXT1dQwIBRFO1A1O/AwIBQlPPAlPxAgIBQVs+W0UCAT9TywNT2QMCAT1jE2MnAgE4ZQllrgECATposQFouwECATVolwFopQECATNpE2lGAgEvawlrwAECATBzB3PdAQIBKnQHexACASZ8B5MBFAIBGJQBB7MBEgIBA2UaZYEBAgE7axprkwECATFzsQFz2gECAS1zmQFzpQECASt5THlvAgEpdk12UwIBJ3yUAXygAQIBJYIBDZABGAIBGZUBCZUB4wECARSWAQmdARICARCeAQmxARYCAQSDAQ+KARgCASGLAQ+PARQCARqVAbYBlQHgAQIBF5UBmwGVAaoBAgEVmwFOmwFxAgETmAFPmAFYAgERngGWAZ4BpQECAQ+kAQ+uARoCAQWIAT+IAVwCASSFAUCFAUMCASKLAR2LAU0CARuNARONAe0BAgEcpQERrAEaAgELrQERrQHuAQIBBo0B1gGNAeoBAgEgjQFZjQFhAgEejQG8AY0BzwECAR2qAUGqAV4CAQ6nAUKnAUUCAQytAdcBrQHrAQIBCq0BV60BYgIBCK0BvQGtAdABAgEH</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="563,22">
+      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="314,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -188,7 +190,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Throw_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="563,52">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="314,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -196,7 +198,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="563,60">
+      <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="314,60">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -204,7 +206,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Throw_2" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="563,52">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="314,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -222,23 +224,23 @@
       <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="541,60" />
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="503,60" />
       <sap2010:ViewStateData Id="AddToDictionary`2_2" sap:VirtualizedContainerService.HintSize="378,138" />
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="503,288" />
-      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="525,512">
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="503,286" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="525,510">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="541,647" />
-      <sap2010:ViewStateData Id="DeserializeJson`1_3" sap:VirtualizedContainerService.HintSize="541,60">
+      <sap2010:ViewStateData Id="ForEach`1_2" sap:VirtualizedContainerService.HintSize="541,644" />
+      <sap2010:ViewStateData Id="DeserializeJson`1_3" sap:VirtualizedContainerService.HintSize="416,60">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="541,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="416,60" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="378,60" />
       <sap2010:ViewStateData Id="AddToDictionary`2_1" sap:VirtualizedContainerService.HintSize="378,138" />
       <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="400,362">
@@ -248,15 +250,23 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="541,497" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="563,1708">
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="416,496" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="541,820">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="585,2302">
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="314,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,666">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -264,7 +274,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="users_info_1" sap:VirtualizedContainerService.HintSize="625,2422" />
+      <sap2010:ViewStateData Id="users_info_1" sap:VirtualizedContainerService.HintSize="376,746" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

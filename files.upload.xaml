@@ -8,6 +8,7 @@
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:si="clr-namespace:System.IO;assembly=mscorlib"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
@@ -71,74 +72,98 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="files.upload" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Uploads or creates a file.&#xD;&#xA;https://api.slack.com/methods/files.upload&#xD;&#xA;&#xD;&#xA;Parameter:&#xD;&#xA;Token (In, String): Authentication token bearing required scopes.&#xD;&#xA;Channels (In, String): Comma-separated list of channel names or IDs where the file will be shared.&#xD;&#xA;Content (In, String): File contents via a POST variable. If omitting this parameter, you must provide a file.&#xD;&#xA;File (In, String): File contents via multipart/form-data. If omitting this parameter, you must submit content.&#xD;&#xA;Filename (In, String): Filename of file.&#xD;&#xA;Filetype (In, String): A file type identifier.&#xD;&#xA;Initial_comment (In, String): The message text introducing the file in specified channels.&#xD;&#xA;Thread_ts (In, String): Provide another message's ts value to upload this file as a reply. Never use a reply's ts value; use its parent instead.&#xD;&#xA;Title (In, String): Title of file.&#xD;&#xA;&#xD;&#xA;" DisplayName="files.upload" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="Result" />
       <Variable x:TypeArguments="x:Int32" Name="StatusCode" />
       <Variable x:TypeArguments="njl:JObject" Name="JsonObject" />
+      <Variable x:TypeArguments="si:StreamReader" Name="StreamObject" />
     </Sequence.Variables>
-    <If Condition="[Not String.IsNullOrEmpty(File)]" sap2010:WorkflowViewState.IdRef="If_3" />
-    <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/files.upload" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" Result="[Result]" StatusCode="[StatusCode]" TimeoutMS="6000">
-      <ui:HttpClient.Attachments>
-        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-      </ui:HttpClient.Attachments>
-      <ui:HttpClient.Headers>
-        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-      </ui:HttpClient.Headers>
-      <ui:HttpClient.Parameters>
-        <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="channel">[Channels]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="content">[Content]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="file">[File]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="filename">[FileName]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="filetype">[FileType]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="initial_comment">[InitialComment]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="thread_ts">[ThreadTS]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="title">[Title]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="pretty">1</InArgument>
-      </ui:HttpClient.Parameters>
-      <ui:HttpClient.UrlSegments>
-        <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-      </ui:HttpClient.UrlSegments>
-    </ui:HttpClient>
-    <If Condition="[StatusCode = 200]" DisplayName="StatusCode check" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[String.IsNullOrEmpty(File)]" DisplayName="If File parameter exists, use multipart/form-data." sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Then>
+        <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Result="{x:Null}" StatusCode="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/files.upload" sap2010:WorkflowViewState.IdRef="HttpClient_2" Method="POST" TimeoutMS="6000">
+          <ui:HttpClient.Attachments>
+            <InArgument x:TypeArguments="x:String" x:Key="FILE">[File]</InArgument>
+          </ui:HttpClient.Attachments>
+          <ui:HttpClient.Headers>
+            <InArgument x:TypeArguments="x:String" x:Key="Content-Type">multipart/form-data</InArgument>
+          </ui:HttpClient.Headers>
+          <ui:HttpClient.Parameters>
+            <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="channel">[Channels]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="content">[Content]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="filename">[FileName]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="filetype">[FileType]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="initial_comment">[InitialComment]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="thread_ts">[ThreadTS]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="title">[Title]</InArgument>
+          </ui:HttpClient.Parameters>
+          <ui:HttpClient.UrlSegments>
+            <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+          </ui:HttpClient.UrlSegments>
+        </ui:HttpClient>
+      </If.Then>
       <If.Else>
-        <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Status:  &quot; + StatusCode.ToString)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+        <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/files.upload" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" Result="[Result]" StatusCode="[StatusCode]" TimeoutMS="6000">
+          <ui:HttpClient.Attachments>
+            <InArgument x:TypeArguments="x:String" x:Key="file">[File]</InArgument>
+          </ui:HttpClient.Attachments>
+          <ui:HttpClient.Headers>
+            <InArgument x:TypeArguments="x:String" x:Key="Content-Type">multipart/form-data</InArgument>
+          </ui:HttpClient.Headers>
+          <ui:HttpClient.Parameters>
+            <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="channels">[Channels]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="content">[Content]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="filename">[FileName]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="filetype">[FileType]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="initial_comment">[InitialComment]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="thread_ts">[ThreadTS]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="title">[Title]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="pretty">1</InArgument>
+          </ui:HttpClient.Parameters>
+          <ui:HttpClient.UrlSegments>
+            <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+          </ui:HttpClient.UrlSegments>
+        </ui:HttpClient>
       </If.Else>
     </If>
-    <WriteLine DisplayName="Write Line" Text="[Result]" sap2010:WorkflowViewState.IdRef="WriteLine_1" />
-    <WriteLine DisplayName="Write Line" Text="[StatusCode.ToString]" sap2010:WorkflowViewState.IdRef="WriteLine_2" />
+    <If Condition="[StatusCode = 200]" DisplayName="StatusCode check" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Else>
+        <Throw Exception="[new Exception( &quot;Slack API Failed. Method: files.upload. Status:  &quot; + StatusCode.ToString)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+      </If.Else>
+    </If>
     <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1" JsonObject="[JsonObject]" JsonString="[Result]" />
     <If Condition="[JsonObject(&quot;ok&quot;).ToObject(Of boolean)]" DisplayName="Error check" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Else>
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Error:  &quot; + jsonObject(&quot;error&quot;).toString)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xZb3NoaWhpa28gTWl5YWljaGlcRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGZpbGVzLnVwbG9hZC54YW1sIUwDeA4CAQFSBVJfAgEwUwVpFQIBFmoFbgoCARFvBW9pAgEOcAVwdgIBC3EFcb4BAgEGcgV2CgIBAlITUjUCATFkP2RAAgEvXj1eQwIBLWFIYVgCAStdQF1JAgEpU+cDU+0DAgEoU7gDU8IDAgEmX0FfSwIBJFPPAlPzAgIBI2M+Y0UCASFbPltFAgEfXEBcSgIBHVPOA1PcAwIBG2JCYkwCARlgQWBLAgEXahNqJwIBEmwJbK4BAgEUby5vOAIBD3AucEUCAQxxsQFxuwECAQlxlwFxpQECAQdyE3JGAgEDdAl0wAECAQRsGmyBAQIBFXQadJMBAgEF</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGZpbGVzLnVwbG9hZC54YW1sK04DkgEOAgEBVQWFAQoCARCGAQWKAQoCAQuLAQWLAb4BAgEGjAEFkAEKAgECVRNVMQIBEVcJaxkCAS5uCYMBGQIBE4YBE4YBJwIBDIgBCYgBrgECAQ6LAbEBiwG7AQIBCYsBlwGLAaUBAgEHjAETjAFGAgEDjgEJjgHAAQIBBGRMZFwCAUJZQVlHAgFAYURhTQIBPlfnA1ftAwIBPWJFYk8CATtX+wJXnwMCATpmQmZJAgE4X0JfSQIBNmBEYE4CATRcSVxcAgEzZUZlUAIBMWNFY08CAS9+Q35EAgEtcEFwRwIBK3tMe1wCASl4RHhNAgEnbusDbvEDAgEmd0V3TwIBJG68A27GAwIBInlFeU8CASBu0wJu9wICAR99Qn1JAgEddkJ2SQIBG27SA27gAwIBGXNJc1wCARh8RnxQAgEWekV6TwIBFIgBGogBgQECAQ+OARqOAZMBAgEF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,210" />
-      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="464,22">
+      <sap2010:ViewStateData Id="HttpClient_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="200,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,208" />
       <sap2010:ViewStateData Id="Throw_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,52">
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="464,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="464,62" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="464,62" />
       <sap2010:ViewStateData Id="DeserializeJson`1_1" sap:VirtualizedContainerService.HintSize="464,60">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -147,22 +172,29 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Throw_2" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,52">
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,884">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="486,926">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="files_upload_1" sap:VirtualizedContainerService.HintSize="526,964" />
+      <sap2010:ViewStateData Id="files_upload_1" sap:VirtualizedContainerService.HintSize="526,1006">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

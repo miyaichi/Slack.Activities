@@ -60,82 +60,171 @@
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart DisplayName="_Test" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="x:String" Name="Token" />
+      <Variable x:TypeArguments="x:String" Name="Channel" />
+      <Variable x:TypeArguments="x:String" Name="User" />
+      <Variable x:TypeArguments="x:String" Name="File" />
+    </Flowchart.Variables>
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_2">
-        <Sequence DisplayName="Test Case: users.info" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+        <Sequence DisplayName="Test Case: conversations.members" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
-            <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Info" />
-            <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Profile" />
+            <Variable x:TypeArguments="s:String[]" Name="Members" />
           </Sequence.Variables>
-          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke users.info workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="users.info.xaml">
+          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke conversations.members workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="conversations.members.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="Token" />
-              <InArgument x:TypeArguments="x:String" x:Key="User" />
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="Profile">[Profile]</OutArgument>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="Info">[Info]</OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="Channel">[Channel]</InArgument>
+              <OutArgument x:TypeArguments="s:String[]" x:Key="Members">[Members]</OutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
-          <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="-- Info --" />
-          <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Info]">
+          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Members]">
             <ui:ForEach.Body>
-              <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:String)">
+              <ActivityAction x:TypeArguments="x:String">
                 <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)" Name="item" />
+                  <DelegateInArgument x:TypeArguments="x:String" Name="member" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                  <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="[item.Key + &quot; : &quot; + item.Value]" />
+                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                  <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[member]" />
                 </Sequence>
               </ActivityAction>
             </ui:ForEach.Body>
           </ui:ForEach>
-          <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="-- Profile --" />
-          <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[Profile]">
-            <ui:ForEach.Body>
-              <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:String)">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)" Name="item" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_5">
-                  <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[item.Key + &quot; : &quot; + item.Value]" />
-                </Sequence>
-              </ActivityAction>
-            </ui:ForEach.Body>
-          </ui:ForEach>
+          <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[Members.Length.ToString + &quot; users found&quot;]" />
         </Sequence>
       </FlowStep>
     </Flowchart.StartNode>
-    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_1">
-      <Sequence DisplayName="Test Case: conversations.members" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <x:Reference>__ReferenceID0</x:Reference>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_2">
+      <Sequence DisplayName="Test Case: users.info" sap2010:WorkflowViewState.IdRef="Sequence_3">
         <Sequence.Variables>
-          <Variable x:TypeArguments="s:String[]" Name="Members" />
+          <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Info" />
+          <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="Profile" />
         </Sequence.Variables>
-        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke conversations.members workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="conversations.members.xaml">
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke users.info workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="users.info.xaml">
           <ui:InvokeWorkflowFile.Arguments>
-            <InArgument x:TypeArguments="x:String" x:Key="Token" />
-            <InArgument x:TypeArguments="x:String" x:Key="Channel" />
-            <OutArgument x:TypeArguments="s:String[]" x:Key="Members">[Members]</OutArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="User">[User]</InArgument>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="Profile">[Profile]</OutArgument>
+            <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="Info">[Info]</OutArgument>
           </ui:InvokeWorkflowFile.Arguments>
         </ui:InvokeWorkflowFile>
-        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Members]">
+        <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="-- Info --" />
+        <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Info]">
           <ui:ForEach.Body>
-            <ActivityAction x:TypeArguments="x:String">
+            <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:String)">
               <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="x:String" Name="member" />
+                <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)" Name="item" />
               </ActivityAction.Argument>
-              <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_1">
-                <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[member]" />
+              <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="[item.Key + &quot; : &quot; + item.Value]" />
               </Sequence>
             </ActivityAction>
           </ui:ForEach.Body>
         </ui:ForEach>
-        <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[Members.Length.ToString + &quot; users found&quot;]" />
+        <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="-- Profile --" />
+        <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[Profile]">
+          <ui:ForEach.Body>
+            <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:String)">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)" Name="item" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <WriteLine DisplayName="Write Line" sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="[item.Key + &quot; : &quot; + item.Value]" />
+              </Sequence>
+            </ActivityAction>
+          </ui:ForEach.Body>
+        </ui:ForEach>
       </Sequence>
     </FlowStep>
-    <x:Reference>__ReferenceID0</x:Reference>
-    <sads:DebugSymbol.Symbol>d0hDOlxVc2Vyc1xZb3NoaWhpa28gTWl5YWljaGlcRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXF9UZXN0LnhhbWwUPgOIAQ8CAQFBCWgUAgECRgtNIwIBF04LTnECARVPC1oYAgENWwtbdAIBC1wLZxgCAQNLXktkAgEbSmFKagIBGUa9AUbOAQIBGE5iTm4CARZPsgFPugECARNVEVccAgEOW2JbcQIBDFyyAVy9AQIBCWIRZBwCAQRWE1aYAQIBD2MTY5gBAgEFVmpWlQECARBjamOVAQIBBg==</sads:DebugSymbol.Symbol>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_3">
+      <Sequence DisplayName="Test Case: chat.postMessage" sap2010:WorkflowViewState.IdRef="Sequence_6">
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke chat.postMessage workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="chat.postMessage.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Channel">[Channel]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Text">Test message</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="as_user" />
+            <InArgument x:TypeArguments="x:String" x:Key="icon_emoji" />
+            <InArgument x:TypeArguments="x:String" x:Key="icon_url" />
+            <InArgument x:TypeArguments="x:String" x:Key="link_names" />
+            <InArgument x:TypeArguments="x:String" x:Key="mrkdwn" />
+            <InArgument x:TypeArguments="x:String" x:Key="parse" />
+            <InArgument x:TypeArguments="x:String" x:Key="reply_broadcast" />
+            <InArgument x:TypeArguments="x:String" x:Key="thread_ts" />
+            <InArgument x:TypeArguments="x:String" x:Key="unfurl_links" />
+            <InArgument x:TypeArguments="x:String" x:Key="unfurl_media" />
+            <InArgument x:TypeArguments="x:String" x:Key="username" />
+            <InArgument x:TypeArguments="x:String" x:Key="Attachments" />
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </Sequence>
+    </FlowStep>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_4">
+      <Sequence DisplayName="Test Case: files.upload" sap2010:WorkflowViewState.IdRef="Sequence_7">
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke files.upload workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="files.upload.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Channels">[Channel]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Content" />
+            <InArgument x:TypeArguments="x:String" x:Key="File">[File]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="FileName">[File]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="FileType">pptx</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="InitialComment">Internal Comment</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="ThreadTS" />
+            <InArgument x:TypeArguments="x:String" x:Key="Title">Title</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </Sequence>
+    </FlowStep>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_5">
+      <Sequence DisplayName="Test Case: files.upload" sap2010:WorkflowViewState.IdRef="Sequence_8">
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke files.upload workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="files.upload.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Channels">[Channel]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="Content">This is file</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="File" />
+            <InArgument x:TypeArguments="x:String" x:Key="FileName">filename.txt</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="FileType">text</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="InitialComment">Internal Comment</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="ThreadTS" />
+            <InArgument x:TypeArguments="x:String" x:Key="Title">Title</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+      </Sequence>
+    </FlowStep>
+    <sads:DebugSymbol.Symbol>d0hDOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXF9UZXN0LnhhbWwOPgPHAQ8CAQFHCV8UAgECSwtRIwIBDVILXRgCAQZeC16bAQIBA05GTk8CARNPSU9SAgERTURNSwIBD0vIAUvkAQIBDlKWAVKhAQIBC1gRWhwCAQdeYl6YAQIBBFkTWXcCAQhZall0AgEJ</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="232,186">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="314,321" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">0,134.02</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="314,62" />
       <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="210,62" />
@@ -157,7 +246,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEach`1_3" sap:VirtualizedContainerService.HintSize="314,321" />
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="336,1137">
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -168,33 +257,55 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <av:Point x:Key="ShapeLocation">210,134</av:Point>
-            <av:Size x:Key="ShapeSize">200,52</av:Size>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="210,62" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="232,186">
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="314,321" />
-      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="314,62" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="200,52">
+      <sap2010:ViewStateData Id="FlowStep_3">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">0,214.02</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_4" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_1">
+      <sap2010:ViewStateData Id="FlowStep_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">0,134.02</av:Point>
-            <av:Size x:Key="ShapeSize">200,52</av:Size>
+            <av:Point x:Key="ShapeLocation">210,214</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_5" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">210,294.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -204,7 +315,7 @@
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 310,107.5 310,134</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,107.5 100,107.5 100,134.02</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>

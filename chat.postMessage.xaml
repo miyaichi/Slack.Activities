@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="chat_postMessage" this:chat_postMessage.as_user="true" this:chat_postMessage.parse="none" this:chat_postMessage.reply_broadcast="true"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="chat_postMessage" this:chat_postMessage.Reply_broadcast="true" this:chat_postMessage.Parse="none" this:chat_postMessage.As_user="true"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -15,18 +15,18 @@
     <x:Property Name="Token" Type="InArgument(x:String)" />
     <x:Property Name="Channel" Type="InArgument(x:String)" />
     <x:Property Name="Text" Type="InArgument(x:String)" />
-    <x:Property Name="as_user" Type="InArgument(x:String)" />
-    <x:Property Name="icon_emoji" Type="InArgument(x:String)" />
-    <x:Property Name="icon_url" Type="InArgument(x:String)" />
-    <x:Property Name="link_names" Type="InArgument(x:String)" />
-    <x:Property Name="mrkdwn" Type="InArgument(x:String)" />
-    <x:Property Name="parse" Type="InArgument(x:String)" />
-    <x:Property Name="reply_broadcast" Type="InArgument(x:String)" />
-    <x:Property Name="thread_ts" Type="InArgument(x:String)" />
-    <x:Property Name="unfurl_links" Type="InArgument(x:String)" />
-    <x:Property Name="unfurl_media" Type="InArgument(x:String)" />
-    <x:Property Name="username" Type="InArgument(x:String)" />
     <x:Property Name="Attachments" Type="InArgument(x:String)" />
+    <x:Property Name="Username" Type="InArgument(x:String)" />
+    <x:Property Name="Unfurl_media" Type="InArgument(x:String)" />
+    <x:Property Name="Unfurl_links" Type="InArgument(x:String)" />
+    <x:Property Name="Thread_ts" Type="InArgument(x:String)" />
+    <x:Property Name="Reply_broadcast" Type="InArgument(x:String)" />
+    <x:Property Name="Parse" Type="InArgument(x:String)" />
+    <x:Property Name="Mrkdwn" Type="InArgument(x:String)" />
+    <x:Property Name="Link_names" Type="InArgument(x:String)" />
+    <x:Property Name="Icon_url" Type="InArgument(x:String)" />
+    <x:Property Name="Icon_emoji" Type="InArgument(x:String)" />
+    <x:Property Name="As_user" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -76,17 +76,16 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Sends a message to a channel." DisplayName="chat.postMessage" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Sends a message to a channel.&#xD;&#xA;https://api.slack.com/methods/chat.postMessage&#xD;&#xA;&#xD;&#xA;Parameter:&#xD;&#xA;Token (In, String): Authentication token bearing required scopes.&#xD;&#xA;Channel (In, String):  Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name. See below for more details.&#xD;&#xA;Text (In, String): Text of the message to send. See below for an explanation of formatting. This field is usually required, unless you're providing only attachments instead. Provide no more than 40,000 characters or risk truncation.&#xD;&#xA;As_user (In, String):  Pass true to post the message as the authed user, instead of as a bot. Defaults to false. See authorship below.&#xD;&#xA;Attachments (In, String): A JSON-based array of structured attachments, presented as a URL-encoded string.&#xD;&#xA;Icon_emoji (In, String): Emoji to use as the icon for this message. Overrides icon_url. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xD;&#xA;Icon_url (In, String): URL to an image to use as the icon for this message. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xD;&#xA;Link_names (In, String): Find and link channel names and usernames.&#xD;&#xA;Mrkdwn (In, String): Disable Slack markup parsing by setting to false. Enabled by default.&#xD;&#xA;Parse (In, String): Change how messages are treated. Defaults to none. See below.&#xD;&#xA;Reply_broadcast (In, String): Used in conjunction with thread_ts and indicates whether reply should be made visible to everyone in the channel or conversation. Defaults to false.&#xD;&#xA;Thread_ts (In, String): Provide another message's ts value to make this message a reply. Avoid using a reply's ts value; use its parent instead.&#xD;&#xA;Unfurl_links (In, String): Pass true to enable unfurling of primarily text-based content.&#xD;&#xA;Unfurl_media (In, String): Pass false to disable unfurling of media content.&#xD;&#xA;Username (In, String): Set your bot's user name. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below." DisplayName="chat.postMessage" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="Result" />
       <Variable x:TypeArguments="x:Int32" Name="StatusCode" />
       <Variable x:TypeArguments="njl:JObject" Name="JsonObject" />
     </Sequence.Variables>
-    <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/chat.postMessage" Method="POST" Result="[Result]" StatusCode="[StatusCode]" TimeoutMS="6000">
+    <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/chat.postMessage" sap2010:WorkflowViewState.IdRef="HttpClient_1" Method="POST" Result="[Result]" StatusCode="[StatusCode]" TimeoutMS="6000">
       <ui:HttpClient.Attachments>
         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
       </ui:HttpClient.Attachments>
@@ -114,26 +113,23 @@
       <ui:HttpClient.UrlSegments>
         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
       </ui:HttpClient.UrlSegments>
-      <sap2010:WorkflowViewState.IdRef>HttpClient_1</sap2010:WorkflowViewState.IdRef>
     </ui:HttpClient>
-    <If Condition="[statusCode = 200]" DisplayName="StatusCode check">
+    <If Condition="[statusCode = 200]" DisplayName="StatusCode check" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Else>
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Status:  &quot; + StatusCode.ToString)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
       </If.Else>
-      <sap2010:WorkflowViewState.IdRef>If_1</sap2010:WorkflowViewState.IdRef>
     </If>
-    <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" JsonObject="[jsonObject]" JsonString="[result]" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1" />
-    <If Condition="[jsonObject(&quot;ok&quot;).ToObject(Of boolean)]" DisplayName="Error check">
+    <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize json" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1" JsonObject="[jsonObject]" JsonString="[result]" />
+    <If Condition="[jsonObject(&quot;ok&quot;).ToObject(Of boolean)]" DisplayName="Error check" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Else>
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Error:  &quot; + jsonObject(&quot;error&quot;).toString)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Else>
-      <sap2010:WorkflowViewState.IdRef>If_2</sap2010:WorkflowViewState.IdRef>
     </If>
-    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGNoYXQucG9zdE1lc3NhZ2UueGFtbCQBZAFpAQQBhwEBjAEBAwG0AQG5AQECUwOFAQ4CAQFZBXYVAgEQdwV8CgIBC30Ffb4BAgEGfgWDAQoCAQJwP3BAAgE1bkVuUwIBM1m8A1nCAwIBMmZDZk8CATBpP2lHAgEuYz1jQwIBLGdBZ0sCASptRW1TAgEoZURlUQIBJmRAZEkCASRZjQNZlwMCASJZzwJZ9wICASFqPmpFAgEfYT5hRQIBHWJAYkkCARtvQW9LAgEZa0hrWQIBF1mjA1mxAwIBFWxCbE0CARNoQ2hPAgERdxN3JwIBDHkJea4BAgEOfXt9hQECAQl9YX1vAgEHfhN+RgIBA4ABCYABwAECAQR5GnmBAQIBD4ABGoABkwECAQU=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGNoYXQucG9zdE1lc3NhZ2UueGFtbCQBtAEBuQEBBAFsAXEBAwGPAQGUAQECUgOBAQ4CAQFYBXQVAgEQdQV5CgIBC3oFer4BAgEGewV/CgIBAm8/b0ACATVtRW1TAgEzWOsDWPEDAgEyZUNlTwIBMGg/aEcCAS5iPWJDAgEsZkFmSwIBKmxFbFMCAShkRGRRAgEmY0BjSQIBJFi8A1jGAwIBIljPAlj3AgIBIWk+aUUCAR9gPmBFAgEdYUBhSQIBG25BbksCARlqSGpZAgEXWNIDWOADAgEVa0JrTQIBE2dDZ08CARF1E3UnAgEMdwl3rgECAQ56sQF6uwECAQl6lwF6pQECAQd7E3tGAgEDfQl9wAECAQR3GneBAQIBD30afZMBAgEF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="HttpClient_1" sap:VirtualizedContainerService.HintSize="314,22">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -165,7 +161,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,455">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="336,1160">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -173,7 +169,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="chat_postMessage_1" sap:VirtualizedContainerService.HintSize="376,535" />
+      <sap2010:ViewStateData Id="chat_postMessage_1" sap:VirtualizedContainerService.HintSize="376,1240" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
