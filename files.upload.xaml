@@ -72,10 +72,9 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Uploads or creates a file.&#xD;&#xA;https://api.slack.com/methods/files.upload&#xD;&#xA;&#xD;&#xA;Parameter:&#xD;&#xA;Token (In, String): Authentication token bearing required scopes.&#xD;&#xA;Channels (In, String): Comma-separated list of channel names or IDs where the file will be shared.&#xD;&#xA;Content (In, String): File contents via a POST variable. If omitting this parameter, you must provide a file.&#xD;&#xA;File (In, String): File contents via multipart/form-data. If omitting this parameter, you must submit content.&#xD;&#xA;Filename (In, String): Filename of file.&#xD;&#xA;Filetype (In, String): A file type identifier.&#xD;&#xA;Initial_comment (In, String): The message text introducing the file in specified channels.&#xD;&#xA;Thread_ts (In, String): Provide another message's ts value to upload this file as a reply. Never use a reply's ts value; use its parent instead.&#xD;&#xA;Title (In, String): Title of file.&#xD;&#xA;&#xD;&#xA;" DisplayName="files.upload" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Uploads or creates a file.&#xA;https://api.slack.com/methods/files.upload&#xA;&#xA;Parameter:&#xA;Token (In, String): Authentication token bearing required scopes.&#xA;Channels (In, String): Comma-separated list of channel names or IDs where the file will be shared.&#xA;Content (In, String): File contents via a POST variable. If omitting this parameter, you must provide a file.&#xA;File (In, String): File contents via multipart/form-data. If omitting this parameter, you must submit content.&#xA;Filename (In, String): Filename of file.&#xA;Filetype (In, String): A file type identifier.&#xA;Initial_comment (In, String): The message text introducing the file in specified channels.&#xA;Thread_ts (In, String): Provide another message's ts value to upload this file as a reply. Never use a reply's ts value; use its parent instead.&#xA;Title (In, String): Title of file.&#xA;&#xA;" DisplayName="files.upload" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="Result" />
       <Variable x:TypeArguments="x:Int32" Name="StatusCode" />
@@ -84,16 +83,16 @@
     </Sequence.Variables>
     <If Condition="[String.IsNullOrEmpty(File)]" DisplayName="If File parameter exists, use multipart/form-data." sap2010:WorkflowViewState.IdRef="If_3">
       <If.Then>
-        <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Result="{x:Null}" StatusCode="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/files.upload" sap2010:WorkflowViewState.IdRef="HttpClient_2" Method="POST" TimeoutMS="6000">
+        <ui:HttpClient Body="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" Username="{x:Null}" AcceptFormat="ANY" BodyFormat="application/xml" DisplayName="HTTP Request" EndPoint="https://slack.com/api/files.upload" sap2010:WorkflowViewState.IdRef="HttpClient_2" Method="POST" Result="[Result]" StatusCode="[StatusCode]" TimeoutMS="6000">
           <ui:HttpClient.Attachments>
-            <InArgument x:TypeArguments="x:String" x:Key="FILE">[File]</InArgument>
+            <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
           </ui:HttpClient.Attachments>
           <ui:HttpClient.Headers>
             <InArgument x:TypeArguments="x:String" x:Key="Content-Type">multipart/form-data</InArgument>
           </ui:HttpClient.Headers>
           <ui:HttpClient.Parameters>
             <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
-            <InArgument x:TypeArguments="x:String" x:Key="channel">[Channels]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="channels">[Channels]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="content">[Content]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="filename">[FileName]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="filetype">[FileType]</InArgument>
@@ -142,7 +141,7 @@
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Error:  &quot; + jsonObject(&quot;error&quot;).toString)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGZpbGVzLnVwbG9hZC54YW1sK04DkgEOAgEBVQWFAQoCARCGAQWKAQoCAQuLAQWLAb4BAgEGjAEFkAEKAgECVRNVMQIBEVcJaxkCAS5uCYMBGQIBE4YBE4YBJwIBDIgBCYgBrgECAQ6LAbEBiwG7AQIBCYsBlwGLAaUBAgEHjAETjAFGAgEDjgEJjgHAAQIBBGRMZFwCAUJZQVlHAgFAYURhTQIBPlfnA1ftAwIBPWJFYk8CATtX+wJXnwMCATpmQmZJAgE4X0JfSQIBNmBEYE4CATRcSVxcAgEzZUZlUAIBMWNFY08CAS9+Q35EAgEtcEFwRwIBK3tMe1wCASl4RHhNAgEnbusDbvEDAgEmd0V3TwIBJG68A27GAwIBInlFeU8CASBu0wJu9wICAR99Qn1JAgEddkJ2SQIBG27SA27gAwIBGXNJc1wCARh8RnxQAgEWekV6TwIBFIgBGogBgQECAQ+OARqOAZMBAgEF</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGZpbGVzLnVwbG9hZC54YW1sLE0DkQEOAgEBVAWEAQoCARCFAQWJAQoCAQuKAQWKAb4BAgEGiwEFjwEKAgECVBNUMQIBEVYJahkCAS5tCYIBGQIBE4UBE4UBJwIBDIcBCYcBrgECAQ6KAbEBigG7AQIBCYoBlwGKAaUBAgEHiwETiwFGAgEDjQEJjQHAAQIBBGNMY1wCAURgRGBNAgFCVusDVvEDAgFBX0VfTwIBP1a8A1bGAwIBPWFFYU8CATtW0wJW9wICATplQmVJAgE4XkJeSQIBNlbSA1bgAwIBNFtJW1wCATNkRmRQAgExYkViTwIBL31DfUQCAS1vQW9HAgErekx6XAIBKXdEd00CASdt6wNt8QMCASZ2RXZPAgEkbbwDbcYDAgEieEV4TwIBIG3TAm33AgIBH3xCfEkCAR11QnVJAgEbbdIDbeADAgEZcklyXAIBGHtGe1ACARZ5RXlPAgEUhwEahwGBAQIBD40BGo0BkwECAQU=</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

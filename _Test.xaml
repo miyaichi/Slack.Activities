@@ -145,18 +145,18 @@
             <InArgument x:TypeArguments="x:String" x:Key="Token">[Token]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="Channel">[Channel]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="Text">Test message</InArgument>
-            <InArgument x:TypeArguments="x:String" x:Key="as_user" />
-            <InArgument x:TypeArguments="x:String" x:Key="icon_emoji" />
-            <InArgument x:TypeArguments="x:String" x:Key="icon_url" />
-            <InArgument x:TypeArguments="x:String" x:Key="link_names" />
-            <InArgument x:TypeArguments="x:String" x:Key="mrkdwn" />
-            <InArgument x:TypeArguments="x:String" x:Key="parse" />
-            <InArgument x:TypeArguments="x:String" x:Key="reply_broadcast" />
-            <InArgument x:TypeArguments="x:String" x:Key="thread_ts" />
-            <InArgument x:TypeArguments="x:String" x:Key="unfurl_links" />
-            <InArgument x:TypeArguments="x:String" x:Key="unfurl_media" />
-            <InArgument x:TypeArguments="x:String" x:Key="username" />
             <InArgument x:TypeArguments="x:String" x:Key="Attachments" />
+            <InArgument x:TypeArguments="x:String" x:Key="Username" />
+            <InArgument x:TypeArguments="x:String" x:Key="Unfurl_media" />
+            <InArgument x:TypeArguments="x:String" x:Key="Unfurl_links" />
+            <InArgument x:TypeArguments="x:String" x:Key="Thread_ts" />
+            <InArgument x:TypeArguments="x:String" x:Key="Reply_broadcast" />
+            <InArgument x:TypeArguments="x:String" x:Key="Parse" />
+            <InArgument x:TypeArguments="x:String" x:Key="Mrkdwn" />
+            <InArgument x:TypeArguments="x:String" x:Key="Link_names" />
+            <InArgument x:TypeArguments="x:String" x:Key="Icon_url" />
+            <InArgument x:TypeArguments="x:String" x:Key="Icon_emoji" />
+            <InArgument x:TypeArguments="x:String" x:Key="As_user" />
           </ui:InvokeWorkflowFile.Arguments>
         </ui:InvokeWorkflowFile>
       </Sequence>
@@ -262,7 +262,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="InvokeWorkflowFile_3" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="336,211">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -319,7 +319,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="_Test_1" sap:VirtualizedContainerService.HintSize="654,756" />
+      <sap2010:ViewStateData Id="_Test_1" sap:VirtualizedContainerService.HintSize="654,716" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
