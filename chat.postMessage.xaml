@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="chat_postMessage" this:chat_postMessage.Reply_broadcast="true" this:chat_postMessage.Parse="none" this:chat_postMessage.As_user="true"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="chat_postMessage" this:chat_postMessage.Parse="none" this:chat_postMessage.ReplyBroadcast="true" this:chat_postMessage.AsUser="true"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -17,16 +17,16 @@
     <x:Property Name="Text" Type="InArgument(x:String)" />
     <x:Property Name="Attachments" Type="InArgument(x:String)" />
     <x:Property Name="Username" Type="InArgument(x:String)" />
-    <x:Property Name="Unfurl_media" Type="InArgument(x:String)" />
-    <x:Property Name="Unfurl_links" Type="InArgument(x:String)" />
-    <x:Property Name="Thread_ts" Type="InArgument(x:String)" />
-    <x:Property Name="Reply_broadcast" Type="InArgument(x:String)" />
     <x:Property Name="Parse" Type="InArgument(x:String)" />
     <x:Property Name="Mrkdwn" Type="InArgument(x:String)" />
-    <x:Property Name="Link_names" Type="InArgument(x:String)" />
-    <x:Property Name="Icon_url" Type="InArgument(x:String)" />
-    <x:Property Name="Icon_emoji" Type="InArgument(x:String)" />
-    <x:Property Name="As_user" Type="InArgument(x:String)" />
+    <x:Property Name="UnfurlMedia" Type="InArgument(x:String)" />
+    <x:Property Name="UnfurlLinks" Type="InArgument(x:String)" />
+    <x:Property Name="ThreadTS" Type="InArgument(x:String)" />
+    <x:Property Name="ReplyBroadcast" Type="InArgument(x:String)" />
+    <x:Property Name="LinkNames" Type="InArgument(x:String)" />
+    <x:Property Name="IconUrl" Type="InArgument(x:String)" />
+    <x:Property Name="IconEmoji" Type="InArgument(x:String)" />
+    <x:Property Name="AsUser" Type="InArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -79,7 +79,7 @@
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Sends a message to a channel.&#xD;&#xA;https://api.slack.com/methods/chat.postMessage&#xD;&#xA;&#xD;&#xA;Parameter:&#xD;&#xA;Token (In, String): Authentication token bearing required scopes.&#xD;&#xA;Channel (In, String):  Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name. See below for more details.&#xD;&#xA;Text (In, String): Text of the message to send. See below for an explanation of formatting. This field is usually required, unless you're providing only attachments instead. Provide no more than 40,000 characters or risk truncation.&#xD;&#xA;As_user (In, String):  Pass true to post the message as the authed user, instead of as a bot. Defaults to false. See authorship below.&#xD;&#xA;Attachments (In, String): A JSON-based array of structured attachments, presented as a URL-encoded string.&#xD;&#xA;Icon_emoji (In, String): Emoji to use as the icon for this message. Overrides icon_url. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xD;&#xA;Icon_url (In, String): URL to an image to use as the icon for this message. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xD;&#xA;Link_names (In, String): Find and link channel names and usernames.&#xD;&#xA;Mrkdwn (In, String): Disable Slack markup parsing by setting to false. Enabled by default.&#xD;&#xA;Parse (In, String): Change how messages are treated. Defaults to none. See below.&#xD;&#xA;Reply_broadcast (In, String): Used in conjunction with thread_ts and indicates whether reply should be made visible to everyone in the channel or conversation. Defaults to false.&#xD;&#xA;Thread_ts (In, String): Provide another message's ts value to make this message a reply. Avoid using a reply's ts value; use its parent instead.&#xD;&#xA;Unfurl_links (In, String): Pass true to enable unfurling of primarily text-based content.&#xD;&#xA;Unfurl_media (In, String): Pass false to disable unfurling of media content.&#xD;&#xA;Username (In, String): Set your bot's user name. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below." DisplayName="chat.postMessage" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Sends a message to a channel.&#xA;https://api.slack.com/methods/chat.postMessage&#xA;&#xA;Parameter:&#xA;Token (In, String): Authentication token bearing required scopes.&#xA;Channel (In, String):  Channel, private group, or IM channel to send message to. Can be an encoded ID, or a name. See below for more details.&#xA;Text (In, String): Text of the message to send. See below for an explanation of formatting. This field is usually required, unless you're providing only attachments instead. Provide no more than 40,000 characters or risk truncation.&#xA;As_user (In, String):  Pass true to post the message as the authed user, instead of as a bot. Defaults to false. See authorship below.&#xA;Attachments (In, String): A JSON-based array of structured attachments, presented as a URL-encoded string.&#xA;Icon_emoji (In, String): Emoji to use as the icon for this message. Overrides icon_url. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xA;Icon_url (In, String): URL to an image to use as the icon for this message. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below.&#xA;Link_names (In, String): Find and link channel names and usernames.&#xA;Mrkdwn (In, String): Disable Slack markup parsing by setting to false. Enabled by default.&#xA;Parse (In, String): Change how messages are treated. Defaults to none. See below.&#xA;Reply_broadcast (In, String): Used in conjunction with thread_ts and indicates whether reply should be made visible to everyone in the channel or conversation. Defaults to false.&#xA;Thread_ts (In, String): Provide another message's ts value to make this message a reply. Avoid using a reply's ts value; use its parent instead.&#xA;Unfurl_links (In, String): Pass true to enable unfurling of primarily text-based content.&#xA;Unfurl_media (In, String): Pass false to disable unfurling of media content.&#xA;Username (In, String): Set your bot's user name. Must be used in conjunction with as_user set to false, otherwise ignored. See authorship below." DisplayName="chat.postMessage" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="Result" />
       <Variable x:TypeArguments="x:Int32" Name="StatusCode" />
@@ -96,18 +96,18 @@
         <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="channel">[Channel]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="text">[Text]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="as_user">[as_user]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="as_user">[AsUser]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="attachments">[attachments]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="icon_emoji">[icon_emoji]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="icon_url">[icon_url]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="link_names">[link_names]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="mrkdwn">[mrkdwn]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="parse">[parse]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="reply_broadcast">[reply_broadcast]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="thread_ts">[thread_ts]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="unfurl_links">[unfurl_links]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="unfurl_media">[unfurl_media]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="username">[username]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="icon_emoji">[IconEmoji]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="icon_url">[IconUrl]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="link_names">[LinkNames]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="mrkdwn">[Mrkdwn]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="parse">[Parse]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="reply_broadcast">[ReplyBroadcast]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="thread_ts">[ThreadTS]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="unfurl_links">[UnfurlLinks]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="unfurl_media">[UnfurlMedia]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="username">[Username]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="pretty">1</InArgument>
       </ui:HttpClient.Parameters>
       <ui:HttpClient.UrlSegments>
@@ -125,7 +125,7 @@
         <Throw Exception="[new Exception( &quot;Slack API Failed. Method: channel.info. Error:  &quot; + jsonObject(&quot;error&quot;).toString)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Else>
     </If>
-    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGNoYXQucG9zdE1lc3NhZ2UueGFtbCQBtAEBuQEBBAFsAXEBAwGPAQGUAQECUgOBAQ4CAQFYBXQVAgEQdQV5CgIBC3oFer4BAgEGewV/CgIBAm8/b0ACATVtRW1TAgEzWOsDWPEDAgEyZUNlTwIBMGg/aEcCAS5iPWJDAgEsZkFmSwIBKmxFbFMCAShkRGRRAgEmY0BjSQIBJFi8A1jGAwIBIljPAlj3AgIBIWk+aUUCAR9gPmBFAgEdYUBhSQIBG25BbksCARlqSGpZAgEXWNIDWOADAgEVa0JrTQIBE2dDZ08CARF1E3UnAgEMdwl3rgECAQ56sQF6uwECAQl6lwF6pQECAQd7E3tGAgEDfQl9wAECAQR3GneBAQIBD30afZMBAgEF</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xtaXlhaWNoaS55b3NoaWhpa29cRG9jdW1lbnRzXFVpUGF0aFxTbGFjay5BY3Rpdml0aWVzXGNoYXQucG9zdE1lc3NhZ2UueGFtbCQBsgEBtwEBBAFiAWcBAwGOAQGTAQECUgOBAQ4CAQFYBXQVAgEQdQV5CgIBC3oFer4BAgEGewV/CgIBAm8/b0ACATVtRW1SAgEzWOsDWPEDAgEyZUNlTgIBMGg/aEcCAS5iPWJDAgEsZkFmSgIBKmxFbFICAShkRGRRAgEmY0BjSAIBJFi8A1jGAwIBIljPAlj3AgIBIWk+aUUCAR9gPmBFAgEdYUBhSQIBG25BbksCARlqSGpYAgEXWNIDWOADAgEVa0JrTAIBE2dDZ04CARF1E3UnAgEMdwl3rgECAQ56sQF6uwECAQl6lwF6pQECAQd7E3tGAgEDfQl9wAECAQR3GneBAQIBD30afZMBAgEF</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

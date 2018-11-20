@@ -147,16 +147,16 @@
             <InArgument x:TypeArguments="x:String" x:Key="Text">Test message</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="Attachments" />
             <InArgument x:TypeArguments="x:String" x:Key="Username" />
-            <InArgument x:TypeArguments="x:String" x:Key="Unfurl_media" />
-            <InArgument x:TypeArguments="x:String" x:Key="Unfurl_links" />
-            <InArgument x:TypeArguments="x:String" x:Key="Thread_ts" />
-            <InArgument x:TypeArguments="x:String" x:Key="Reply_broadcast" />
             <InArgument x:TypeArguments="x:String" x:Key="Parse" />
             <InArgument x:TypeArguments="x:String" x:Key="Mrkdwn" />
-            <InArgument x:TypeArguments="x:String" x:Key="Link_names" />
-            <InArgument x:TypeArguments="x:String" x:Key="Icon_url" />
-            <InArgument x:TypeArguments="x:String" x:Key="Icon_emoji" />
-            <InArgument x:TypeArguments="x:String" x:Key="As_user" />
+            <InArgument x:TypeArguments="x:String" x:Key="UnfurlMedia" />
+            <InArgument x:TypeArguments="x:String" x:Key="UnfurlLinks" />
+            <InArgument x:TypeArguments="x:String" x:Key="ThreadTS" />
+            <InArgument x:TypeArguments="x:String" x:Key="ReplyBroadcast" />
+            <InArgument x:TypeArguments="x:String" x:Key="LinkNames" />
+            <InArgument x:TypeArguments="x:String" x:Key="IconUrl" />
+            <InArgument x:TypeArguments="x:String" x:Key="IconEmoji" />
+            <InArgument x:TypeArguments="x:String" x:Key="AsUser" />
           </ui:InvokeWorkflowFile.Arguments>
         </ui:InvokeWorkflowFile>
       </Sequence>
