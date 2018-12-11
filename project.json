@@ -3,14 +3,14 @@
   "description": "Slack operations",
   "main": "NewActivity.xaml",
   "dependencies": {
-    "UiPath.UIAutomation.Activities": "18.3.6877.28298",
-    "UiPath.System.Activities": "18.3.6877.28276",
     "UiPath.WebAPI.Activities": "1.2.6863.33980",
-    "Microsoft.Activities.Extensions": "2.0.6.9"
+    "Microsoft.Activities.Extensions": "2.0.6.9",
+    "UiPath.UIAutomation.Activities": "18.3.6897.22543",
+    "UiPath.System.Activities": "18.3.6897.22524"
   },
   "schemaVersion": "3.2",
   "studioVersion": "18.3.2.0",
-  "projectVersion": "1.0.6898.18910",
+  "projectVersion": "1.0.6919.23631",
   "runtimeOptions": {
     "autoDispose": false,
     "excludedLoggedData": [
