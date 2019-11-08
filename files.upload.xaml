@@ -87,9 +87,6 @@
           <ui:HttpClient.Attachments>
             <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
           </ui:HttpClient.Attachments>
-          <ui:HttpClient.Headers>
-            <InArgument x:TypeArguments="x:String" x:Key="Content-Type">multipart/form-data</InArgument>
-          </ui:HttpClient.Headers>
           <ui:HttpClient.Parameters>
             <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="channels">[Channels]</InArgument>
@@ -110,9 +107,6 @@
           <ui:HttpClient.Attachments>
             <InArgument x:TypeArguments="x:String" x:Key="file">[File]</InArgument>
           </ui:HttpClient.Attachments>
-          <ui:HttpClient.Headers>
-            <InArgument x:TypeArguments="x:String" x:Key="Content-Type">multipart/form-data</InArgument>
-          </ui:HttpClient.Headers>
           <ui:HttpClient.Parameters>
             <InArgument x:TypeArguments="x:String" x:Key="token">[Token]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="channels">[Channels]</InArgument>
